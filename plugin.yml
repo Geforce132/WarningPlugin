@@ -1,0 +1,30 @@
+name: WarningSystem
+version: 1.0.0
+main: me.Geforce.plugin.plugin_WarningSystem
+author: Geforce
+description: Adds a fully customizable warning system into Minecraft.
+commands:
+    warn:
+        description: Issues a warning to the specified player.
+        usage: /warn <player> <reason>
+    clearwarnings:
+        description: Unbans and clears all warnings issued to a specified player.
+        usage: /clearwarnings <player>
+    warningrecord:
+        description: Displays the warning record for the specified player.
+        usage: /warningrecord <player>
+        
+permissions:
+    warningsystem.warn:
+        description: Gives player access to the /warn command.
+        default: false
+    warningsystem.clearwarnings:
+        description: Gives player access to the /clearwarnings command.
+        default: false
+    warningsystem.warningrecord:
+        description: Gives player access to the /warningrecord command.
+        default: true
+    warningsystem.warningrecord.others:
+        description: Lets player check the warning record of other players.
+        default: false
+        

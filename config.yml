@@ -1,0 +1,5 @@
+maxWarningPoints: 5
+WarningTypes:
+    griefing:
+        warningPoints: 1
+        
