@@ -77,11 +77,13 @@ public class CommandWarn implements CommandExecutor {
 				}
 				
 				if(playerFile.getInt("warningPoints") >= plugin.getConfig().getInt("maxWarningPoints")){					
-					if(Bukkit.getPlayer(player).isOnline()){
+					if(Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline()){
 						Bukkit.getPlayer(player).kickPlayer("You have surpassed the warning point limit, and have been automatically banned.");
 					}
 					
 					Bukkit.getServer().getBanList(Type.NAME).addBan(player, "You have exceeded the warning point limit.", null, sender.getName());
+					
+					sender.sendMessage(ChatColor.GREEN + "Successfully warned and banned " + player + " for " + reason + ".");
 					return true;
 				}
 				
@@ -89,7 +91,7 @@ public class CommandWarn implements CommandExecutor {
 					Bukkit.getPlayer(player).sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "You have received " + plugin.getConfig().getConfigurationSection("WarningTypes").getConfigurationSection(reason.toLowerCase()).getInt("warningPoints") + " warning point(s) from " + sender.getName() + " for " + reason + ". You now have " + playerFile.getInt("warningPoints") + " warning point(s).");
 				}
 
-				
+				sender.sendMessage(ChatColor.GREEN + "Successfully warned " + player + " for " + reason + ".");
 				return true;
 			}
 		}
