@@ -1,5 +1,14 @@
 maxWarningPoints: 5
 WarningTypes:
     griefing:
+        tempbans: false
         warningPoints: 1
+    looting:
+        tempbans: true
+        warningPoints: 1
+TempbanLengths:
+    onePoint: 1D
+    twoPoints: 3D
+    threePoints: 7D
+    fourPoints: 14D
         

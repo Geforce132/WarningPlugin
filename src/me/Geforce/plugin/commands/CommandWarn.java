@@ -10,12 +10,18 @@ import me.Geforce.plugin.misc.HelpfulMethods;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import com.earth2me.essentials.CommandSource;
+import com.earth2me.essentials.User;
+import com.earth2me.essentials.commands.EssentialsCommand;
 
 public class CommandWarn implements CommandExecutor {
 	
@@ -26,12 +32,13 @@ public class CommandWarn implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String unknownString, String[] commandArgs) {		
-		if(command.getName().equalsIgnoreCase("warn")){
+		if(unknownString.equalsIgnoreCase("warn")){
 			if(!sender.hasPermission("warningsystem.warn")){ sender.sendMessage(ChatColor.RED + "You do not have access to this command."); return true; }
 
 			if(commandArgs.length == 2){
 				String player = commandArgs[0];
 				String reason = commandArgs[1];
+				Player senderAsPlayer = Bukkit.getServer().getPlayer(sender.getName());
 				
 				if(plugin.getConfig().getConfigurationSection("WarningTypes").getConfigurationSection(reason.toLowerCase()) == null){
 					sender.sendMessage(ChatColor.RED + reason + " is a invalid warning type!");
@@ -87,10 +94,14 @@ public class CommandWarn implements CommandExecutor {
 					return true;
 				}
 				
+				if(plugin.getConfig().getConfigurationSection("WarningTypes").getConfigurationSection(reason.toLowerCase()).getBoolean("tempbans")){
+					senderAsPlayer.performCommand("tempban " + player + " " + plugin.getConfig().getConfigurationSection("TempbanLengths").getString(HelpfulMethods.getPointsAsString(playerFile.getInt("warningPoints"))));
+				}
+				
 				if(Bukkit.getPlayer(player) != null && Bukkit.getPlayer(player).isOnline()){
 					Bukkit.getPlayer(player).sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "You have received " + plugin.getConfig().getConfigurationSection("WarningTypes").getConfigurationSection(reason.toLowerCase()).getInt("warningPoints") + " warning point(s) from " + sender.getName() + " for " + reason + ". You now have " + playerFile.getInt("warningPoints") + " warning point(s).");
 				}
-
+				
 				sender.sendMessage(ChatColor.GREEN + "Successfully warned " + player + " for " + reason + ".");
 				return true;
 			}

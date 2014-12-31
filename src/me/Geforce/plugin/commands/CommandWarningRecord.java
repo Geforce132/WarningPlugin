@@ -59,9 +59,17 @@ public class CommandWarningRecord implements CommandExecutor {
 				return true;
 			}else if(commandArgs.length == 1){
 				if(!sender.hasPermission("warningsystem.warningrecord.others")){ sender.sendMessage(ChatColor.RED + "You do not have access to this command."); return true; }
-				File file = new File(plugin.getDataFolder(), "Warnings/" + commandArgs[0] + ".yml");
+				File file = null;
 				
-				if(!file.exists()){
+				File[] files = new File(plugin.getDataFolder(), "Warnings/").listFiles();
+				
+				for(File tempFile : files){
+					if(tempFile.getName().equalsIgnoreCase(commandArgs[0] + ".yml")){
+						file = tempFile;
+					}
+				}
+				
+				if(file == null){
 					sender.sendMessage(ChatColor.RED + commandArgs[0] + " has not been issued any warnings.");
 					return true;
 				}
@@ -70,7 +78,7 @@ public class CommandWarningRecord implements CommandExecutor {
 				
 				if(playerFile.getConfigurationSection("Warnings") != null){
 					
-					sender.sendMessage(ChatColor.GOLD + "Warnings issued to " + commandArgs[0] + (Bukkit.getServer().getBanList(Type.NAME).isBanned(commandArgs[0]) ? " (" + ChatColor.DARK_RED + "banned" + ChatColor.GOLD + ")" : "") + ":");
+					sender.sendMessage(ChatColor.GOLD + "Warnings issued to " + file.getName().replace(".yml", "") + (Bukkit.getServer().getBanList(Type.NAME).isBanned(commandArgs[0]) ? " (" + ChatColor.DARK_RED + "banned" + ChatColor.GOLD + ")" : "") + ":");
 					
 					for(int i = 1; i <= 100; i++){
 						ConfigurationSection warning = playerFile.getConfigurationSection("Warnings").getConfigurationSection("Warning" + i);

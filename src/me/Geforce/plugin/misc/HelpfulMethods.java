@@ -31,4 +31,20 @@ public class HelpfulMethods {
 		return null;
 	}
 
+	public static String getPointsAsString(int amount) {
+		if(amount == 1){
+			return "onePoint";
+		}else if(amount == 2){
+			return "twoPoints";
+		}else if(amount == 3){
+			return "threePoints";
+		}else if(amount == 4){
+			return "fourPoints";
+		}else if(amount == 5){
+			return "fivePoints";
+		}else{
+			return "null";
+		}
+	}
+
 }
