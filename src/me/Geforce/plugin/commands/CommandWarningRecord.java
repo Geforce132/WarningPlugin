@@ -27,7 +27,7 @@ public class CommandWarningRecord implements CommandExecutor {
 
 			if(commandArgs.length == 0){
 				if(!sender.hasPermission("warningsystem.warningrecord")){ sender.sendMessage(ChatColor.RED + "You do not have access to this command."); return true; }
-				File file = new File(plugin.getDataFolder(), "Warnings/" + sender.getName() + ".yml");
+				File file = new File(plugin.getDataFolder(), "Warnings/" + Bukkit.getServer().getPlayer(sender.getName()).getUniqueId() + ".yml");
 				
 				if(!file.exists()){
 					sender.sendMessage(ChatColor.RED + "You have not been issued any warnings.");
@@ -64,7 +64,7 @@ public class CommandWarningRecord implements CommandExecutor {
 				File[] files = new File(plugin.getDataFolder(), "Warnings/").listFiles();
 				
 				for(File tempFile : files){
-					if(tempFile.getName().equalsIgnoreCase(commandArgs[0] + ".yml")){
+					if(tempFile.getName().equalsIgnoreCase(Bukkit.getServer().getPlayer(commandArgs[0]).getUniqueId() + ".yml")){
 						file = tempFile;
 					}
 				}
@@ -78,7 +78,7 @@ public class CommandWarningRecord implements CommandExecutor {
 				
 				if(playerFile.getConfigurationSection("Warnings") != null){
 					
-					sender.sendMessage(ChatColor.GOLD + "Warnings issued to " + file.getName().replace(".yml", "") + (Bukkit.getServer().getBanList(Type.NAME).isBanned(commandArgs[0]) ? " (" + ChatColor.DARK_RED + "banned" + ChatColor.GOLD + ")" : "") + ":");
+					sender.sendMessage(ChatColor.GOLD + "Warnings issued to " + commandArgs[0] + (Bukkit.getServer().getBanList(Type.NAME).isBanned(commandArgs[0]) ? " (" + ChatColor.DARK_RED + "banned" + ChatColor.GOLD + ")" : "") + ":"); //file.getName.replace(".yml", "");
 					
 					for(int i = 1; i <= 100; i++){
 						ConfigurationSection warning = playerFile.getConfigurationSection("Warnings").getConfigurationSection("Warning" + i);

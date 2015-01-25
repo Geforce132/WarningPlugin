@@ -1,5 +1,5 @@
 name: WarningSystem
-version: 1.0.4
+version: 1.0.5
 main: me.Geforce.plugin.plugin_WarningSystem
 author: Geforce
 description: Adds a fully customizable warning system into Minecraft.
