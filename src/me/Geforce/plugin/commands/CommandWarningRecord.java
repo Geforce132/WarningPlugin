@@ -64,11 +64,11 @@ public class CommandWarningRecord implements CommandExecutor {
 				File[] files = new File(plugin.getDataFolder(), "Warnings/").listFiles();
 				
 				for(File tempFile : files){
-					if(tempFile.getName().equalsIgnoreCase(Bukkit.getServer().getPlayer(commandArgs[0]).getUniqueId() + ".yml")){
+					if(tempFile.getName().equalsIgnoreCase((Bukkit.getServer().getPlayer(commandArgs[0]) != null ? Bukkit.getServer().getPlayer(commandArgs[0]).getUniqueId() : Bukkit.getServer().getOfflinePlayer(commandArgs[0]).getUniqueId()) + ".yml")){
 						file = tempFile;
 					}
 				}
-				
+								
 				if(file == null){
 					sender.sendMessage(ChatColor.RED + commandArgs[0] + " has not been issued any warnings.");
 					return true;
@@ -78,7 +78,7 @@ public class CommandWarningRecord implements CommandExecutor {
 				
 				if(playerFile.getConfigurationSection("Warnings") != null){
 					
-					sender.sendMessage(ChatColor.GOLD + "Warnings issued to " + commandArgs[0] + (Bukkit.getServer().getBanList(Type.NAME).isBanned(commandArgs[0]) ? " (" + ChatColor.DARK_RED + "banned" + ChatColor.GOLD + ")" : "") + ":"); //file.getName.replace(".yml", "");
+					sender.sendMessage(ChatColor.GOLD + "Warnings issued to " + commandArgs[0] + (Bukkit.getServer().getBanList(Type.NAME).isBanned(commandArgs[0]) ? " (" + ChatColor.DARK_RED + "banned" + ChatColor.GOLD + ")" : "") + ":"); 
 					
 					for(int i = 1; i <= 100; i++){
 						ConfigurationSection warning = playerFile.getConfigurationSection("Warnings").getConfigurationSection("Warning" + i);

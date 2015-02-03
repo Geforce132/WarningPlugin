@@ -8,7 +8,6 @@ import me.Geforce.plugin.commands.CommandWarningRecord;
 import me.Geforce.plugin.handlers.WSEventHandler;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 

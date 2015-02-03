@@ -2,7 +2,6 @@ package me.Geforce.plugin.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.UUID;
 
 import me.Geforce.plugin.plugin_WarningSystem;
@@ -11,8 +10,6 @@ import me.Geforce.plugin.misc.HelpfulMethods;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,10 +17,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import com.earth2me.essentials.CommandSource;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.commands.EssentialsCommand;
 
 public class CommandWarn implements CommandExecutor {
 	
@@ -41,7 +34,7 @@ public class CommandWarn implements CommandExecutor {
 				String player = commandArgs[0];
 				String reason = commandArgs[1];
 				Player sender = Bukkit.getServer().getPlayer(senderObj.getName());
-				UUID warnedPlayerUUID = Bukkit.getServer().getPlayer(player).getUniqueId();
+				UUID warnedPlayerUUID = (Bukkit.getServer().getPlayer(commandArgs[0]) != null ? Bukkit.getServer().getPlayer(commandArgs[0]).getUniqueId() : Bukkit.getServer().getOfflinePlayer(commandArgs[0]).getUniqueId());
 				
 				if(plugin.getConfig().getConfigurationSection("WarningTypes").getConfigurationSection(reason.toLowerCase()) == null){
 					sender.sendMessage(ChatColor.RED + reason + " is a invalid warning type!");

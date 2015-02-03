@@ -25,7 +25,7 @@ public class CommandClearWarnings implements CommandExecutor {
 
 			if(commandArgs.length == 1){
 				boolean wasBanned = false;
-				File file = new File(plugin.getDataFolder(), "Warnings/" + Bukkit.getServer().getPlayer(commandArgs[0]).getUniqueId() + ".yml");
+				File file = new File(plugin.getDataFolder(), "Warnings/" + (Bukkit.getServer().getPlayer(commandArgs[0]) != null ? Bukkit.getServer().getPlayer(commandArgs[0]).getUniqueId() : Bukkit.getServer().getOfflinePlayer(commandArgs[0]).getUniqueId()) + ".yml");
 				
 				if(!file.exists()){
 					sender.sendMessage(ChatColor.RED + "Found no warnings for player " + commandArgs[0]);

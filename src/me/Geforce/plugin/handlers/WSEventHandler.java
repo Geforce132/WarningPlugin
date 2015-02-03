@@ -5,6 +5,7 @@ import java.io.File;
 import me.Geforce.plugin.plugin_WarningSystem;
 import me.Geforce.plugin.misc.HelpfulMethods;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -41,7 +42,7 @@ public class WSEventHandler implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerJoined(AsyncPlayerPreLoginEvent event){
-		File file = new File(plugin.getDataFolder(), "Warnings/" + event.getName() + ".yml");
+		File file = new File(plugin.getDataFolder(), "Warnings/" + (Bukkit.getServer().getPlayer(event.getName()) != null ? Bukkit.getServer().getPlayer(event.getName()).getUniqueId() : Bukkit.getServer().getOfflinePlayer(event.getName()).getUniqueId()) + ".yml");
 		
 		if(file != null){
 			FileConfiguration playerFile = YamlConfiguration.loadConfiguration(file); 
